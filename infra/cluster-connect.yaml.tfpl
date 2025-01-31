@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ${cluster_name}-secret
+  namespace: argocd
+  labels:
+    argocd.argoproj.io/secret-type: cluster
+type: Opaque
+stringData:
+  name: "${cluster_name}"
+  server: "${cluster_url}"
+  config: |
+    {
+      "awsAuthConfig": {
+        "clusterName": "${cluster_name}",
+        "roleARN": "${role_arn}"
+      },
+      "tlsClientConfig": {
+        "insecure": false,
+        "caData": "${base64_cert}"
+      }
+    }

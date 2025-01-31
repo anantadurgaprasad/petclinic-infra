@@ -6,4 +6,7 @@ module "vpc" {
   public_subnets  = var.public_subnets
   private_subnets = var.private_subnets
   create_nat      = var.create_nat
+  tags = {
+    "kubernetes.io/cluster/dev-argocd-eks-cluster" = "shared"
+  }
 }
