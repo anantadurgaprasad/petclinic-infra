@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guestbook
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/argoproj/argocd-example-apps.git  # Bitnami Helm chart repository
+    targetRevision: HEAD # Helm chart version for Nginx ingress
+    path: guestbook
+
+  destination:
+    server: https://039FBAD8943853A9C33B9E719A0FFDBB.gr7.us-west-2.eks.amazonaws.com
+    namespace: default
+  syncPolicy:
+    automated:  # Enables automated sync
+      prune: true  # Automatically delete resources no longer defined in the repo
+      selfHeal: true  # Automatically fix out-of-sync resources
+    retry:
+      limit: 3
